@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.BrokenBarrierException;
 
 import org.cloudbus.cloudsim.Cloudlet;
@@ -65,7 +66,9 @@ public class CloudsimProject {
         UtilizationModelFull fullUtilize = new UtilizationModelFull();
         
         for (int cloudletId = 0; cloudletId < 40; cloudletId++) {
-            Cloudlet newCloudlet = new Cloudlet(cloudletId, cloudletLength, pesNumber, cloudletFileSize, cloudletOutputSize,
+        	Random r = new Random();
+        	
+            Cloudlet newCloudlet = new Cloudlet(cloudletId, (cloudletLength+r.nextInt(1000)), pesNumber, cloudletFileSize, cloudletOutputSize,
                     fullUtilize, fullUtilize, fullUtilize);
             newCloudlet.setUserId(dcb.getId());
             cloudletList.add(newCloudlet);
@@ -81,7 +84,7 @@ public class CloudsimProject {
         int vCPU = 1;
         String VMM = "XEN";
         
-        for (int vmId = 0; vmId < 40; vmId++) {
+        for (int vmId = 0; vmId < 10; vmId++) {
             Vm virtualMachine = new Vm(vmId, dcb.getId(), mips, vCPU, ram, bandwith, diskSize, VMM, new CloudletSchedulerTimeShared());
             vmList.add(virtualMachine);
         }
@@ -104,6 +107,7 @@ public class CloudsimProject {
             Log.printLine("*****************************************");
             Log.printLine("ID: " + c.getCloudletId() + ", VM: " + c.getVmId() + ", Status: " + c.getStatus()+ ", Submit: " + c.getActualCPUTime() + ", Start: " + c.getExecStartTime() + ", Finish: " + c.getFinishTime());
             Log.printLine("*****************************************");
+            cloudletNo++;
         }
     }
     
